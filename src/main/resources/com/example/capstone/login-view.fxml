@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="15" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.capstone.LoginController">
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <Label text="Online Food Delivery System" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <TextField fx:id="emailField" promptText="Email"/>
+    <PasswordField fx:id="passwordField" promptText="Password"/>
+
+    <Button text="Login" onAction="#onLoginButtonClick"/>
+
+    <Label fx:id="errorLabel" style="-fx-text-fill: red;"/>
+</VBox>

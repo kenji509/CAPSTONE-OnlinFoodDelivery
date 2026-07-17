@@ -16,20 +16,19 @@ public class LoginController {
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
 
-    // Hardcoded test customer for today - no database yet
-    private Customer testCustomer = new Customer("C1", "Kenji", "kenji@email.com",
-            "pass123", "0917xxxxxxx", "Dalaguete, Cebu");
+    private CustomerDAO customerDAO = new CustomerDAO();
 
     @FXML
     protected void onLoginButtonClick() {
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        if (testCustomer.login(email, password)) {
+        Customer customer = customerDAO.login(email, password);
+
+        if (customer != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
                 Scene menuScene = new Scene(loader.load());
-
                 Stage stage = (Stage) errorLabel.getScene().getWindow();
                 stage.setScene(menuScene);
                 stage.setTitle("Menu");
@@ -41,4 +40,31 @@ public class LoginController {
             errorLabel.setText("Invalid email or password");
         }
     }
+
+    @FXML
+    protected void onGoToRegisterClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("register-view.fxml"));
+            Scene registerScene = new Scene(loader.load());
+            Stage stage = (Stage) errorLabel.getScene().getWindow();
+            stage.setScene(registerScene);
+            stage.setTitle("Register");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void onGoToRiderLoginClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("rider-login-view.fxml"));
+            Scene riderLoginScene = new Scene(loader.load());
+            Stage stage = (Stage) errorLabel.getScene().getWindow();
+            stage.setScene(riderLoginScene);
+            stage.setTitle("Rider Login");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

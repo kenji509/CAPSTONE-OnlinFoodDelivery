@@ -36,7 +36,13 @@ public class Customer extends User {
         return review;
     }
 
+
+
     public String getDeliveryAddress() { return deliveryAddress; }
     public int getLoyaltyPoints() { return loyaltyPoints; }
     public List<Order> getOrderHistory() { return orderHistory; }
+
+    public String getPassword() {
+        return password;
+    }
 }

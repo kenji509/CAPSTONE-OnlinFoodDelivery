@@ -5,4 +5,6 @@ module com.example.capstone {
 
     opens com.example.capstone to javafx.fxml;
     exports com.example.capstone;
+    requires java.sql;
+    requires mysql.connector.java;
 }

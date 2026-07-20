@@ -1,8 +1,11 @@
-package com.example.capstone;
+package com.example.capstone.controller;
 
+import com.example.capstone.dao.RestaurantDAO;
+import com.example.capstone.model.Customer;
 import com.example.capstone.model.MenuItem;
 import com.example.capstone.model.OrderItem;
 import com.example.capstone.model.Restaurant;
+import com.example.capstone.util.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,28 +14,29 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MenuController {
+
     @FXML private ListView<String> menuListView;
     @FXML private Label cartLabel;
 
     private Restaurant restaurant;
     private List<MenuItem> menuItems;
     private List<OrderItem> cartItems = new ArrayList<>();
+    private Customer loggedInCustomer;
+
+    public void setCustomer(Customer customer) {
+        this.loggedInCustomer = customer;
+    }
 
     @FXML
     public void initialize() {
-        restaurant = new Restaurant("R1", "Jollibee", "Cebu City");
-        MenuItem chickenjoy = new MenuItem("M1", "Chickenjoy", "Fried chicken", 89.0, "Main");
-        MenuItem spaghetti = new MenuItem("M2", "Jolly Spaghetti", "Sweet style", 55.0, "Main");
-        restaurant.addMenuItem(chickenjoy);
-        restaurant.addMenuItem(spaghetti);
-        menuItems = restaurant.getMenu();
-
+        RestaurantDAO restaurantDAO = new RestaurantDAO();
+        restaurant = restaurantDAO.getRestaurantWithMenu("R1");
+        menuItems  = restaurant.getMenu();
         ObservableList<String> displayItems = FXCollections.observableArrayList();
         for (MenuItem item : menuItems) {
             displayItems.add(item.getName() + " - ₱" + item.getPrice());
@@ -57,15 +61,30 @@ public class MenuController {
             return;
         }
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("cart-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/capstone/cart-view.fxml"));
             Scene cartScene = new Scene(loader.load());
-
             CartController cartController = loader.getController();
-            cartController.setCartData(cartItems, restaurant);
-
+            cartController.setCartData(cartItems, restaurant, loggedInCustomer);
             Stage stage = (Stage) cartLabel.getScene().getWindow();
             stage.setScene(cartScene);
             stage.setTitle("Cart");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void onLogoutClick() {
+        // SRP: SessionManager handles session deletion
+        SessionManager.clearSession();
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/capstone/login-view.fxml"));
+            Scene loginScene = new Scene(loader.load());
+            Stage stage = (Stage) cartLabel.getScene().getWindow();
+            stage.setScene(loginScene);
+            stage.setTitle("Login");
         } catch (IOException e) {
             e.printStackTrace();
         }

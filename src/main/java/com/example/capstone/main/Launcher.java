@@ -1,4 +1,4 @@
-package com.example.capstone;
+package com.example.capstone.main;
 
 import javafx.application.Application;
 

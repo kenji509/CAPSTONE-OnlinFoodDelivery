@@ -1,6 +1,10 @@
 package com.example.capstone.model;
 
-public class Rider extends User {
+import java.io.Serializable;
+
+public class Rider extends User implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String vehicleType;
     private String licenseNumber;
     private boolean isAvailable;

@@ -1,9 +1,12 @@
 package com.example.capstone.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer extends User {
+public class Customer extends User implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String deliveryAddress;
     private int loyaltyPoints;
     private List<Order> orderHistory = new ArrayList<>();
@@ -16,18 +19,10 @@ public class Customer extends User {
         this.loyaltyPoints = 0;
     }
 
-    public List<Restaurant> browseRestaurants(List<Restaurant> allRestaurants) {
-        return allRestaurants;
-    }
-
     public Order placeOrder(Restaurant restaurant, List<OrderItem> items) {
         Order order = new Order("ORD-" + System.currentTimeMillis(), this, restaurant, items);
         orderHistory.add(order);
         return order;
-    }
-
-    public void trackOrder(Order order) {
-        // TODO: fetch/display order.getStatus()
     }
 
     public Review rateReview(Restaurant restaurant, int rating, String comment) {
@@ -36,13 +31,8 @@ public class Customer extends User {
         return review;
     }
 
-
-
     public String getDeliveryAddress() { return deliveryAddress; }
     public int getLoyaltyPoints() { return loyaltyPoints; }
     public List<Order> getOrderHistory() { return orderHistory; }
-
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() { return password; }
 }

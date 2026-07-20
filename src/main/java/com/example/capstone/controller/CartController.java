@@ -1,6 +1,11 @@
-package com.example.capstone;
+package com.example.capstone.controller;
 
-import com.example.capstone.model.*;
+import com.example.capstone.dao.OrderDAO;
+import com.example.capstone.main.HelloApplication;
+import com.example.capstone.model.Customer;
+import com.example.capstone.model.Order;
+import com.example.capstone.model.OrderItem;
+import com.example.capstone.model.Restaurant;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,21 +14,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.List;
 
 public class CartController {
+
     @FXML private ListView<String> cartListView;
     @FXML private Label totalLabel;
 
     private List<OrderItem> cartItems;
     private Restaurant restaurant;
+    private Customer customer;
 
-    public void setCartData(List<OrderItem> cartItems, Restaurant restaurant) {
-        this.cartItems = cartItems;
+    public void setCartData(List<OrderItem> cartItems, Restaurant restaurant, Customer customer) {
+        this.cartItems  = cartItems;
         this.restaurant = restaurant;
-
+        this.customer   = customer;
         ObservableList<String> displayItems = FXCollections.observableArrayList();
         double total = 0;
         for (OrderItem item : cartItems) {
@@ -37,18 +43,20 @@ public class CartController {
 
     @FXML
     protected void onPlaceOrderClick() {
-        Customer testCustomer = new Customer("C1", "Kenji", "kenji@email.com",
-                "pass123", "0917xxxxxxx", "Dalaguete, Cebu");
-
-        Order order = testCustomer.placeOrder(restaurant, cartItems);
-
+        Order order = customer.placeOrder(restaurant, cartItems);
+        StringBuilder summary = new StringBuilder();
+        for (OrderItem item : cartItems) {
+            summary.append(item.getMenuItem().getName())
+                    .append(" x").append(item.getQuantity()).append(", ");
+        }
+        OrderDAO orderDAO = new OrderDAO();
+        orderDAO.save(order, summary.toString());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("confirmation-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    HelloApplication.class.getResource("/com/example/capstone/confirmation-view.fxml"));
             Scene confirmScene = new Scene(loader.load());
-
             ConfirmationController confirmController = loader.getController();
             confirmController.setOrderData(order);
-
             Stage stage = (Stage) totalLabel.getScene().getWindow();
             stage.setScene(confirmScene);
             stage.setTitle("Order Confirmed");

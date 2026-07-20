@@ -1,5 +1,7 @@
-package com.example.capstone;
+package com.example.capstone.controller;
 
+import com.example.capstone.dao.CustomerDAO;
+import com.example.capstone.main.HelloApplication;
 import com.example.capstone.model.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +10,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class RegisterController {
+
     @FXML private TextField nameField;
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
@@ -19,16 +21,19 @@ public class RegisterController {
     @FXML private TextField addressField;
     @FXML private Label messageLabel;
 
-    private CustomerDAO customerDAO = new CustomerDAO();
+    private final CustomerDAO customerDAO = new CustomerDAO();
 
     @FXML
     protected void onRegisterButtonClick() {
         String userId = "C-" + System.currentTimeMillis();
-        Customer newCustomer = new Customer(userId, nameField.getText(), emailField.getText(),
-                passwordField.getText(), contactField.getText(), addressField.getText());
-
+        Customer newCustomer = new Customer(
+                userId,
+                nameField.getText(),
+                emailField.getText(),
+                passwordField.getText(),
+                contactField.getText(),
+                addressField.getText());
         boolean success = customerDAO.register(newCustomer);
-
         if (success) {
             messageLabel.setStyle("-fx-text-fill: green;");
             messageLabel.setText("Registered! You can now login.");
@@ -41,7 +46,8 @@ public class RegisterController {
     @FXML
     protected void onGoToLoginClick() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    HelloApplication.class.getResource("/com/example/capstone/login-view.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) messageLabel.getScene().getWindow();
             stage.setScene(loginScene);

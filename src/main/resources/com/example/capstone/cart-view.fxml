@@ -5,16 +5,13 @@
 
 <VBox alignment="TOP_CENTER" spacing="15" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.CartController">
+      fx:controller="com.example.capstone.controller.CartController">
     <padding>
         <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>
 
     <Label text="Your Cart" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-
     <ListView fx:id="cartListView" prefHeight="250"/>
-
     <Label fx:id="totalLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-
     <Button text="Place Order" onAction="#onPlaceOrderClick"/>
 </VBox>

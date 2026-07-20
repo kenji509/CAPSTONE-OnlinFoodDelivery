@@ -5,17 +5,15 @@
 
 <VBox alignment="TOP_CENTER" spacing="15" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.MenuController">
+      fx:controller="com.example.capstone.controller.MenuController">
     <padding>
         <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>
 
     <Label text="Restaurant Menu" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-
     <ListView fx:id="menuListView" prefHeight="300"/>
-
     <Button text="Add to Cart" onAction="#onAddToCartClick"/>
     <Label fx:id="cartLabel" text="Cart: 0 items"/>
-
     <Button text="Checkout" onAction="#onCheckoutClick"/>
+    <Button text="Logout" onAction="#onLogoutClick" style="-fx-text-fill: red;"/>
 </VBox>

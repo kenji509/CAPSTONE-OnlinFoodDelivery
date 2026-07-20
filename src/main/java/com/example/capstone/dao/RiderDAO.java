@@ -1,6 +1,7 @@
-package com.example.capstone;
+package com.example.capstone.dao;
 
 import com.example.capstone.model.Rider;
+import com.example.capstone.util.MySQLConnection;
 import java.sql.*;
 
 public class RiderDAO {
@@ -30,9 +31,13 @@ public class RiderDAO {
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Rider(rs.getString("userId"), rs.getString("name"),
-                        rs.getString("email"), password,
-                        rs.getString("contactNumber"), rs.getString("vehicleType"), "");
+                return new Rider(
+                        rs.getString("userId"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        password,
+                        rs.getString("contactNumber"),
+                        rs.getString("vehicleType"), "");
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -11,17 +11,9 @@ public class Admin extends User {
         this.accessLevel = accessLevel;
     }
 
-    public void manageUsers(List<User> users) {
-        // TODO: add/remove/suspend users
-    }
-
-    public void manageRestaurants(List<Restaurant> restaurants) {
-        // TODO: approve/remove restaurants
-    }
-
-    public void viewReports(List<Order> allOrders) {
-        // TODO: aggregate sales, top restaurants, etc.
-    }
+    public void manageUsers(List<User> users) {}
+    public void manageRestaurants(List<Restaurant> restaurants) {}
+    public void viewReports(List<Order> allOrders) {}
 
     public String getAccessLevel() { return accessLevel; }
 }

@@ -1,6 +1,7 @@
-package com.example.capstone;
+package com.example.capstone.dao;
 
 import com.example.capstone.model.Customer;
+import com.example.capstone.util.MySQLConnection;
 import java.sql.*;
 
 public class CustomerDAO {
@@ -30,9 +31,13 @@ public class CustomerDAO {
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Customer(rs.getString("userId"), rs.getString("name"),
-                        rs.getString("email"), rs.getString("password"),
-                        rs.getString("contactNumber"), rs.getString("deliveryAddress"));
+                return new Customer(
+                        rs.getString("userId"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("contactNumber"),
+                        rs.getString("deliveryAddress"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

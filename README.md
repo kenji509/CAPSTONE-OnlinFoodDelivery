@@ -1,40 +1,87 @@
-# CAPSTONE - Online Food Delivery System
+# Online Food Delivery System
 
-## Overview
-This is a JavaFX-based online food delivery application that allows customers to browse restaurants, place orders, and rate their experience, while riders can accept and manage deliveries. The system supports multiple user roles (Customer, Rider, Admin) and manages user sessions using Java Serialization.
+A JavaFX desktop application that connects customers, restaurants, and delivery
+riders. Customers can browse a restaurant's menu, add items to a cart, place an
+order, and track its status. Riders can log in separately, view pending
+orders, and accept deliveries. The system uses a MySQL database (via XAMPP)
+for persistent storage of customers, riders, restaurants, menu items, and
+orders.
 
 ## Major Features
-- *User Registration & Login* — separate flows for Customers and Riders, with credential validation handled by the User class hierarchy.
-- *Customer Dashboard* — browse restaurants, place orders, view order history, and leave reviews.
-- *Rider Dashboard* — view pending orders, accept deliveries, and update delivery status.
-- *Session Management* — persistent login sessions using Java's built-in serialization mechanism.
-- *Data Persistence* — order, restaurant, and user data managed through DAO classes backed by a MySQL database.
 
-## Serialization Mechanism
-User session management is implemented through *Java Serialization*, handled entirely by the SessionManager class (com.example.capstone.util.SessionManager).
+- **Customer flow:** Register → Login → Browse Menu → Add to Cart → Checkout →
+  Place Order → Confirmation (with option to cancel).
+- **Rider flow:** Register → Login → View Pending Orders → Accept Order.
+- **Session management:** Login state is preserved using Java Serialization
+  (see below).
+- **Database-backed persistence:** All customers, riders, restaurants, menu
+  items, and orders are stored in and retrieved from a MySQL database.
 
-- *On login:* once a user's credentials are validated, SessionManager.saveSession(User user) serializes the logged-in User object (a Customer or Rider) to a file named session.dat using ObjectOutputStream.
-- *During navigation:* the application checks SessionManager.isLoggedIn() and SessionManager.loadSession() to read the serialized User object back with ObjectInputStream, keeping the user's session active as they move between screens.
-- *On logout:* SessionManager.clearSession() deletes session.dat from disk, and the application redirects the user back to the login screen.
+## Project Structure
 
-To support this, User, Customer, and Rider all implement java.io.Serializable and declare an explicit serialVersionUID to ensure consistent deserialization across versions of the class.
+```
+com.example.capstone
+├── main        → Application entry point (HelloApplication, Launcher)
+├── controller  → JavaFX FXML controllers (one per screen)
+├── dao         → Data Access Objects for database operations
+├── model       → Domain classes (User, Customer, Rider, Order, etc.)
+└── util        → Shared utilities (MySQLConnection, SessionManager)
+```
+
+## Session Management via Java Serialization
+
+When a customer or rider successfully logs in, the `SessionManager` class
+serializes the logged-in `User` object (specifically a `Customer` or `Rider`,
+both of which implement `Serializable`) to a local file named `session.dat`
+using `ObjectOutputStream`.
+
+- **Creation:** On successful login, `SessionManager.saveSession(user)` writes
+  the user object to `session.dat`.
+- **Usage:** The session file represents the currently active session while
+  the user navigates between screens (Menu, Cart, Confirmation, Rider
+  Dashboard, etc.). `SessionManager.loadSession()` can deserialize the file
+  using `ObjectInputStream` to check who is currently logged in, and
+  `SessionManager.isLoggedIn()` checks for the file's existence.
+- **Deletion:** When the user clicks **Logout**, `SessionManager.clearSession()`
+  deletes `session.dat` from disk, and the user is redirected back to the
+  Login screen.
+
+This demonstrates the full lifecycle of a serialized session file: creation on
+login, use throughout the session, and deletion on logout.
 
 ## SOLID Principles Applied
 
-### 1. Dependency Inversion Principle (DIP) — User.java
-The abstract User class serves as the base abstraction that all concrete user types (Customer, Rider, Admin) depend on, rather than depending on each other directly. Controllers and the session manager work with the User abstraction instead of concrete subclasses, so new user types can be added without modifying existing code that depends on User.
+### 1. Single Responsibility Principle (SRP)
 
-*Benefit:* Reduces coupling between high-level modules (controllers, session handling) and low-level user-type implementations, making the system easier to extend with new roles in the future.
+The `SessionManager` class (in the `util` package) has exactly one
+responsibility: managing the session file (saving, loading, and clearing it).
+Previously, this logic could easily have been scattered across every
+controller that needed to know who was logged in. By centralizing it in
+`SessionManager`, each controller (`LoginController`, `MenuController`,
+`RiderLoginController`, `RiderDashboardController`) only needs to call a
+single method (`saveSession`, `clearSession`) rather than implementing file
+I/O itself.
 
-### 2. Single Responsibility Principle (SRP) — SessionManager.java
-The SessionManager class has exactly one responsibility: managing the user session file (creating, reading, and deleting session.dat). It does not handle authentication logic, UI navigation, or database access — those responsibilities live in the respective controller and DAO classes.
+**Benefit:** If the session storage mechanism ever changes (e.g., switching
+from a flat file to encrypted storage or a database-backed session), only
+`SessionManager` needs to be modified — no controller code changes are
+required.
 
-*Benefit:* Keeps session-handling logic isolated and easy to test or modify independently, without risk of breaking login validation or UI behavior.
+### 2. Dependency Inversion Principle (DIP)
 
-## Tech Stack
-- Java / JavaFX
-- MySQL (via JDBC)
+The `User` abstract class acts as a high-level abstraction that `Customer`
+and `Rider` depend on, rather than duplicating login/session logic in each
+subclass. Additionally, a `UserRepository` interface was introduced in the
+`dao` package, decoupling higher-level code from concrete DAO implementations
+(`CustomerDAO`, `RiderDAO`). Controllers and services can depend on the
+`UserRepository` abstraction instead of a specific database implementation.
+
+**Benefit:** The system can support new user types or swap out the underlying
+data source (e.g., moving from MySQL to another database or an API) without
+rewriting the controllers that rely on user authentication.
+
+## Requirements
+
+- Java 17+
 - Maven
-
-## Author
-Kenji
+- MySQL (via XAMPP), running on `localhost:3306`, database name `fooddelivery`

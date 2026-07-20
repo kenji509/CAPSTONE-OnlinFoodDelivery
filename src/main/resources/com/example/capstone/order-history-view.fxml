@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="TOP_CENTER" spacing="15" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.capstone.controller.OrderHistoryController">
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <Label text="Your Order History" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <ListView fx:id="historyListView" prefHeight="300"/>
+    <Label fx:id="emptyLabel"/>
+
+    <Button text="Back to Restaurants" onAction="#onBackToHomeClick"/>
+</VBox>

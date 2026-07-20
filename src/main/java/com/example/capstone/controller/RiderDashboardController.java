@@ -1,6 +1,7 @@
 package com.example.capstone.controller;
 
 import com.example.capstone.dao.OrderDAO;
+import com.example.capstone.model.Rider;
 import com.example.capstone.util.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -18,6 +19,11 @@ public class RiderDashboardController {
     @FXML private Label statusLabel;
 
     private final OrderDAO orderDAO = new OrderDAO();
+    private Rider loggedInRider;
+
+    public void setRider(Rider rider) {
+        this.loggedInRider = rider;
+    }
 
     @FXML
     public void initialize() {
@@ -34,7 +40,7 @@ public class RiderDashboardController {
         String selected = ordersListView.getSelectionModel().getSelectedItem();
         if (selected != null) {
             String orderId  = selected.split(" - ")[0];
-            boolean success = orderDAO.updateStatus(orderId, "Accepted");
+            boolean success = orderDAO.acceptOrder(orderId, loggedInRider.getUserId());
             if (success) {
                 statusLabel.setText("Accepted: " + orderId);
                 loadPendingOrders();
@@ -48,7 +54,6 @@ public class RiderDashboardController {
 
     @FXML
     protected void onLogoutClick() {
-        // SRP: SessionManager handles session deletion
         SessionManager.clearSession();
         try {
             FXMLLoader loader = new FXMLLoader(

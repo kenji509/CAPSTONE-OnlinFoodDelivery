@@ -41,6 +41,57 @@ public class OrderDAO {
         return orders;
     }
 
+    public List<String> getOrderHistory(String customerId) {
+        List<String> orders = new ArrayList<>();
+        String sql = "SELECT * FROM orders WHERE customerId = ? ORDER BY orderId DESC";
+        try (Connection conn = MySQLConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                orders.add(rs.getString("orderId") + " - "
+                        + rs.getString("itemsSummary") + " - ₱"
+                        + rs.getDouble("totalAmount") + " - "
+                        + rs.getString("status"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public List<String> getOrdersByRider(String riderId) {
+        List<String> orders = new ArrayList<>();
+        String sql = "SELECT * FROM orders WHERE riderId = ? ORDER BY orderId DESC";
+        try (Connection conn = MySQLConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, riderId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                orders.add(rs.getString("orderId") + " - "
+                        + rs.getString("itemsSummary") + " - ₱"
+                        + rs.getDouble("totalAmount") + " - "
+                        + rs.getString("status"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+    public boolean acceptOrder(String orderId, String riderId) {
+        String sql = "UPDATE orders SET status='Accepted', riderId=? WHERE orderId=?";
+        try (Connection conn = MySQLConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, riderId);
+            stmt.setString(2, orderId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean updateStatus(String orderId, String newStatus) {
         String sql = "UPDATE orders SET status=? WHERE orderId=?";
         try (Connection conn = MySQLConnection.getConnection();

@@ -26,12 +26,13 @@ public class RiderLoginController {
         String password = passwordField.getText();
         Rider rider = riderDAO.login(email, password);
         if (rider != null) {
-            // SRP: SessionManager handles session, RiderLoginController handles navigation
             SessionManager.saveSession(rider);
             try {
                 FXMLLoader loader = new FXMLLoader(
                         getClass().getResource("/com/example/capstone/rider-dashboard-view.fxml"));
                 Scene dashScene = new Scene(loader.load());
+                RiderDashboardController dashController = loader.getController();
+                dashController.setRider(rider);
                 Stage stage = (Stage) errorLabel.getScene().getWindow();
                 stage.setScene(dashScene);
                 stage.setTitle("Rider Dashboard");

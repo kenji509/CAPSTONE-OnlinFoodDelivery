@@ -10,10 +10,15 @@
         <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>
 
-    <Label text="Restaurant Menu" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-    <ListView fx:id="menuListView" prefHeight="300"/>
+    <Label fx:id="restaurantNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <ListView fx:id="menuListView" prefHeight="280"/>
+
     <Button text="Add to Cart" onAction="#onAddToCartClick"/>
     <Label fx:id="cartLabel" text="Cart: 0 items"/>
+
     <Button text="Checkout" onAction="#onCheckoutClick"/>
+    <Button text="View Order History" onAction="#onViewOrderHistoryClick"/>
+    <Button text="Back to Restaurants" onAction="#onBackToRestaurantsClick"/>
     <Button text="Logout" onAction="#onLogoutClick" style="-fx-text-fill: red;"/>
 </VBox>

@@ -26,17 +26,16 @@ public class LoginController {
         String password = passwordField.getText();
         Customer customer = customerDAO.login(email, password);
         if (customer != null) {
-            // SRP: SessionManager handles session, LoginController handles navigation
             SessionManager.saveSession(customer);
             try {
                 FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/com/example/capstone/menu-view.fxml"));
-                Scene menuScene = new Scene(loader.load());
-                MenuController menuController = loader.getController();
-                menuController.setCustomer(customer);
+                        getClass().getResource("/com/example/capstone/restaurant-selection-view.fxml"));
+                Scene selectionScene = new Scene(loader.load());
+                RestaurantSelectionController selectionController = loader.getController();
+                selectionController.setCustomer(customer);
                 Stage stage = (Stage) errorLabel.getScene().getWindow();
-                stage.setScene(menuScene);
-                stage.setTitle("Menu");
+                stage.setScene(selectionScene);
+                stage.setTitle("Choose a Restaurant");
             } catch (IOException e) {
                 e.printStackTrace();
                 errorLabel.setText("Error loading menu screen");

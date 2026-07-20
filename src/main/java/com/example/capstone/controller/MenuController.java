@@ -22,21 +22,28 @@ public class MenuController {
 
     @FXML private ListView<String> menuListView;
     @FXML private Label cartLabel;
+    @FXML private Label restaurantNameLabel;
 
     private Restaurant restaurant;
     private List<MenuItem> menuItems;
     private List<OrderItem> cartItems = new ArrayList<>();
     private Customer loggedInCustomer;
+    private String restaurantId = "R1";
 
     public void setCustomer(Customer customer) {
         this.loggedInCustomer = customer;
     }
 
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
     @FXML
     public void initialize() {
         RestaurantDAO restaurantDAO = new RestaurantDAO();
-        restaurant = restaurantDAO.getRestaurantWithMenu("R1");
+        restaurant = restaurantDAO.getRestaurantWithMenu(restaurantId);
         menuItems  = restaurant.getMenu();
+        restaurantNameLabel.setText(restaurant.getName());
         ObservableList<String> displayItems = FXCollections.observableArrayList();
         for (MenuItem item : menuItems) {
             displayItems.add(item.getName() + " - ₱" + item.getPrice());
@@ -75,8 +82,39 @@ public class MenuController {
     }
 
     @FXML
+    protected void onViewOrderHistoryClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/capstone/order-history-view.fxml"));
+            Scene historyScene = new Scene(loader.load());
+            OrderHistoryController historyController = loader.getController();
+            historyController.setCustomer(loggedInCustomer);
+            Stage stage = (Stage) cartLabel.getScene().getWindow();
+            stage.setScene(historyScene);
+            stage.setTitle("Order History");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void onBackToRestaurantsClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/capstone/restaurant-selection-view.fxml"));
+            Scene selectionScene = new Scene(loader.load());
+            RestaurantSelectionController selectionController = loader.getController();
+            selectionController.setCustomer(loggedInCustomer);
+            Stage stage = (Stage) cartLabel.getScene().getWindow();
+            stage.setScene(selectionScene);
+            stage.setTitle("Choose a Restaurant");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     protected void onLogoutClick() {
-        // SRP: SessionManager handles session deletion
         SessionManager.clearSession();
         try {
             FXMLLoader loader = new FXMLLoader(

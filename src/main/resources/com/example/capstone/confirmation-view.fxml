@@ -11,9 +11,13 @@
     </padding>
 
     <Label text="Order Confirmed!" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: green;"/>
+
     <Label fx:id="orderIdLabel"/>
     <Label fx:id="statusLabel"/>
     <Label fx:id="totalLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
     <Button text="Cancel Order" onAction="#onCancelOrderClick" style="-fx-text-fill: red;"/>
     <Label fx:id="cancelMessageLabel"/>
+
+    <Button text="Back to Restaurants" onAction="#onBackToHomeClick"/>
 </VBox>

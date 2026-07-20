@@ -1,6 +1,6 @@
 package com.example.capstone.main;
 
-import com.example.capstone.controller.MenuController;
+import com.example.capstone.controller.RestaurantSelectionController;
 import com.example.capstone.model.Customer;
 import com.example.capstone.model.Rider;
 import com.example.capstone.model.User;
@@ -20,11 +20,11 @@ public class HelloApplication extends Application {
 
         if (existingUser instanceof Customer customer) {
             FXMLLoader loader = new FXMLLoader(
-                    HelloApplication.class.getResource("/com/example/capstone/menu-view.fxml"));
+                    HelloApplication.class.getResource("/com/example/capstone/restaurant-selection-view.fxml"));
             Scene scene = new Scene(loader.load());
-            MenuController menuController = loader.getController();
-            menuController.setCustomer(customer);
-            stage.setTitle("Menu");
+            RestaurantSelectionController selectionController = loader.getController();
+            selectionController.setCustomer(customer);
+            stage.setTitle("Choose a Restaurant");
             stage.setScene(scene);
 
         } else if (existingUser instanceof Rider) {

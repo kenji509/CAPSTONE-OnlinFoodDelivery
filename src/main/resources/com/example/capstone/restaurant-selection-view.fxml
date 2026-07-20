@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="TOP_CENTER" spacing="15" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.capstone.controller.RestaurantSelectionController">
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <Label text="Choose a Restaurant" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <ListView fx:id="restaurantListView" prefHeight="300"/>
+
+    <Button text="View Menu" onAction="#onViewMenuClick"/>
+    <Label fx:id="messageLabel" style="-fx-text-fill: red;"/>
+
+    <Button text="Logout" onAction="#onLogoutClick" style="-fx-text-fill: red;"/>
+</VBox>

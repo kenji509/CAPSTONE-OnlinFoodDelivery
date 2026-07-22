@@ -14,7 +14,7 @@ public class RestaurantDAO {
         String restaurantSql = "SELECT * FROM restaurants WHERE restaurantId=?";
         String menuSql       = "SELECT * FROM menu_items WHERE restaurantId=?";
 
-        try (Connection conn = MySQLConnection.getConnection()) {
+        try (Connection conn = MySQLConnection.getInstance().getConnection()) {
 
             try (PreparedStatement stmt = conn.prepareStatement(restaurantSql)) {
                 stmt.setString(1, restaurantId);
@@ -52,7 +52,7 @@ public class RestaurantDAO {
     public List<Restaurant> getAllRestaurants() {
         List<Restaurant> restaurants = new ArrayList<>();
         String sql = "SELECT * FROM restaurants";
-        try (Connection conn = MySQLConnection.getConnection();
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

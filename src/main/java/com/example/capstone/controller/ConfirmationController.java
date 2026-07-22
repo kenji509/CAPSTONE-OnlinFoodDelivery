@@ -1,7 +1,7 @@
 package com.example.capstone.controller;
 
-import com.example.capstone.dao.OrderDAO;
 import com.example.capstone.model.Order;
+import com.example.capstone.service.OrderService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,7 +17,7 @@ public class ConfirmationController {
     @FXML private Label cancelMessageLabel;
 
     private Order order;
-    private final OrderDAO orderDAO = new OrderDAO();
+    private final OrderService orderService = new OrderService();
 
     public void setOrderData(Order order) {
         this.order = order;
@@ -28,8 +28,7 @@ public class ConfirmationController {
 
     @FXML
     protected void onCancelOrderClick() {
-        order.cancelOrder();
-        boolean success = orderDAO.updateStatus(order.getOrderId(), order.getStatus());
+        boolean success = orderService.cancelOrder(order);
         if (success) {
             cancelMessageLabel.setStyle("-fx-text-fill: green;");
             cancelMessageLabel.setText("Order cancelled successfully.");

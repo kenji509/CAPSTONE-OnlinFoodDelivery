@@ -8,7 +8,7 @@ public class RiderDAO {
 
     public boolean register(Rider r, String password) {
         String sql = "INSERT INTO riders VALUES (?,?,?,?,?,?)";
-        try (Connection conn = MySQLConnection.getConnection();
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, r.getUserId());
             stmt.setString(2, r.getName());
@@ -25,7 +25,7 @@ public class RiderDAO {
 
     public Rider login(String email, String password) {
         String sql = "SELECT * FROM riders WHERE email=? AND password=?";
-        try (Connection conn = MySQLConnection.getConnection();
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
             stmt.setString(2, password);
@@ -43,5 +43,20 @@ public class RiderDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean updateProfile(String userId, String name, String contactNumber, String vehicleType) {
+        String sql = "UPDATE riders SET name=?, contactNumber=?, vehicleType=? WHERE userId=?";
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            stmt.setString(2, contactNumber);
+            stmt.setString(3, vehicleType);
+            stmt.setString(4, userId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -10,7 +10,7 @@ public class OrderDAO {
 
     public boolean save(Order order, String itemsSummary) {
         String sql = "INSERT INTO orders (orderId, customerId, status, totalAmount, itemsSummary) VALUES (?,?,?,?,?)";
-        try (Connection conn = MySQLConnection.getConnection();
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, order.getOrderId());
             stmt.setString(2, order.getCustomer().getUserId());
@@ -27,7 +27,7 @@ public class OrderDAO {
     public List<String> getPendingOrders() {
         List<String> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders WHERE status = 'Pending'";
-        try (Connection conn = MySQLConnection.getConnection();
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -44,7 +44,7 @@ public class OrderDAO {
     public List<String> getOrderHistory(String customerId) {
         List<String> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders WHERE customerId = ? ORDER BY orderId DESC";
-        try (Connection conn = MySQLConnection.getConnection();
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, customerId);
             ResultSet rs = stmt.executeQuery();
@@ -63,7 +63,7 @@ public class OrderDAO {
     public List<String> getOrdersByRider(String riderId) {
         List<String> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders WHERE riderId = ? ORDER BY orderId DESC";
-        try (Connection conn = MySQLConnection.getConnection();
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, riderId);
             ResultSet rs = stmt.executeQuery();
@@ -81,7 +81,7 @@ public class OrderDAO {
 
     public boolean acceptOrder(String orderId, String riderId) {
         String sql = "UPDATE orders SET status='Accepted', riderId=? WHERE orderId=?";
-        try (Connection conn = MySQLConnection.getConnection();
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, riderId);
             stmt.setString(2, orderId);
@@ -94,7 +94,7 @@ public class OrderDAO {
 
     public boolean updateStatus(String orderId, String newStatus) {
         String sql = "UPDATE orders SET status=? WHERE orderId=?";
-        try (Connection conn = MySQLConnection.getConnection();
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, newStatus);
             stmt.setString(2, orderId);
@@ -107,7 +107,7 @@ public class OrderDAO {
 
     public boolean delete(String orderId) {
         String sql = "DELETE FROM orders WHERE orderId=?";
-        try (Connection conn = MySQLConnection.getConnection();
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, orderId);
             return stmt.executeUpdate() > 0;

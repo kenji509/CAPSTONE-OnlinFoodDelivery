@@ -1,7 +1,7 @@
 package com.example.capstone.controller;
 
-import com.example.capstone.dao.OrderDAO;
 import com.example.capstone.model.Rider;
+import com.example.capstone.service.OrderService;
 import com.example.capstone.util.SessionManager;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -18,7 +18,7 @@ public class RiderDashboardController {
     @FXML private ListView<String> ordersListView;
     @FXML private Label statusLabel;
 
-    private final OrderDAO orderDAO = new OrderDAO();
+    private final OrderService orderService = new OrderService();
     private Rider loggedInRider;
 
     public void setRider(Rider rider) {
@@ -31,7 +31,7 @@ public class RiderDashboardController {
     }
 
     private void loadPendingOrders() {
-        List<String> pending = orderDAO.getPendingOrders();
+        List<String> pending = orderService.getPendingOrders();
         ordersListView.setItems(FXCollections.observableArrayList(pending));
     }
 
@@ -40,7 +40,7 @@ public class RiderDashboardController {
         String selected = ordersListView.getSelectionModel().getSelectedItem();
         if (selected != null) {
             String orderId  = selected.split(" - ")[0];
-            boolean success = orderDAO.acceptOrder(orderId, loggedInRider.getUserId());
+            boolean success = orderService.acceptOrder(orderId, loggedInRider.getUserId());
             if (success) {
                 statusLabel.setText("Accepted: " + orderId);
                 loadPendingOrders();

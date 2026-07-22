@@ -1,7 +1,7 @@
 package com.example.capstone.controller;
 
-import com.example.capstone.dao.OrderDAO;
 import com.example.capstone.model.Customer;
+import com.example.capstone.service.OrderService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +17,7 @@ public class OrderHistoryController {
     @FXML private ListView<String> historyListView;
     @FXML private Label emptyLabel;
 
-    private final OrderDAO orderDAO = new OrderDAO();
+    private final OrderService orderService = new OrderService();
     private Customer customer;
 
     public void setCustomer(Customer customer) {
@@ -26,7 +26,7 @@ public class OrderHistoryController {
     }
 
     private void loadHistory() {
-        List<String> history = orderDAO.getOrderHistory(customer.getUserId());
+        List<String> history = orderService.getOrderHistory(customer.getUserId());
         if (history.isEmpty()) {
             emptyLabel.setText("You have no past orders yet.");
         } else {

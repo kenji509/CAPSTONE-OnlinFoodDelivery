@@ -36,10 +36,15 @@ public class MenuController {
 
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
+        loadMenu();
     }
 
     @FXML
     public void initialize() {
+        loadMenu();
+    }
+
+    private void loadMenu() {
         RestaurantDAO restaurantDAO = new RestaurantDAO();
         restaurant = restaurantDAO.getRestaurantWithMenu(restaurantId);
         menuItems  = restaurant.getMenu();
@@ -49,6 +54,8 @@ public class MenuController {
             displayItems.add(item.getName() + " - ₱" + item.getPrice());
         }
         menuListView.setItems(displayItems);
+        cartItems.clear();
+        cartLabel.setText("Cart: 0 items");
     }
 
     @FXML

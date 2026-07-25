@@ -15,6 +15,9 @@ import java.util.List;
 
 public class OrderHistoryController {
 
+    private static final double WINDOW_WIDTH  = 400;
+    private static final double WINDOW_HEIGHT = 720;
+
     @FXML private ListView<String> historyListView;
     @FXML private Label emptyLabel;
 
@@ -65,7 +68,7 @@ public class OrderHistoryController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/restaurant-selection-view.fxml"));
-            Scene selectionScene = new Scene(loader.load());
+            Scene selectionScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             RestaurantSelectionController selectionController = loader.getController();
             selectionController.setCustomer(customer);
             Stage stage = (Stage) historyListView.getScene().getWindow();

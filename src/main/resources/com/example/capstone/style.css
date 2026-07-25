@@ -153,6 +153,31 @@
     -fx-font-weight: bold;
 }
 
+/* ----- Corner Menu Button (⋮) ----- */
+.corner-menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #999999;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 2px 8px;
+    -fx-background-radius: 6px;
+}
+
+.corner-menu-button:hover {
+    -fx-background-color: #FFF0E4;
+    -fx-text-fill: #D9480F;
+}
+
+.corner-menu-button .arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.corner-menu-button .arrow-button {
+    -fx-padding: 0;
+}
+
 /* ----- Error / Status Labels ----- */
 .error-label {
     -fx-text-fill: #D62828;

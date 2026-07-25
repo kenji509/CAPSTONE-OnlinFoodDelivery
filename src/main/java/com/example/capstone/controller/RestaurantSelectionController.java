@@ -24,6 +24,9 @@ import java.util.List;
 
 public class RestaurantSelectionController {
 
+    private static final double WINDOW_WIDTH  = 400;
+    private static final double WINDOW_HEIGHT = 720;
+
     @FXML private ListView<Restaurant> restaurantListView;
     @FXML private Label messageLabel;
 
@@ -92,7 +95,7 @@ public class RestaurantSelectionController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/menu-view.fxml"));
-            Scene menuScene = new Scene(loader.load());
+            Scene menuScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             MenuController menuController = loader.getController();
             menuController.setCustomer(loggedInCustomer);
             menuController.setRestaurantId(selected.getRestaurantId());
@@ -110,7 +113,7 @@ public class RestaurantSelectionController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/login-view.fxml"));
-            Scene loginScene = new Scene(loader.load());
+            Scene loginScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             Stage stage = (Stage) restaurantListView.getScene().getWindow();
             stage.setScene(loginScene);
             stage.setTitle("Login");

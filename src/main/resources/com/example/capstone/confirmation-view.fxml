@@ -24,5 +24,6 @@
     <Button text="Cancel Order" onAction="#onCancelOrderClick" styleClass="danger-button"/>
     <Label fx:id="cancelMessageLabel"/>
 
+    <Button text="⭐ Rate this Restaurant" onAction="#onRateRestaurantClick" styleClass="secondary-button"/>
     <Button text="← Back to Restaurants" onAction="#onBackToHomeClick" styleClass="secondary-button"/>
 </VBox>

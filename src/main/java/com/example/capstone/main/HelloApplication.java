@@ -1,6 +1,8 @@
 package com.example.capstone.main;
 
+import com.example.capstone.controller.AdminDashboardController;
 import com.example.capstone.controller.RestaurantSelectionController;
+import com.example.capstone.model.Admin;
 import com.example.capstone.model.Customer;
 import com.example.capstone.model.Rider;
 import com.example.capstone.model.User;
@@ -35,6 +37,15 @@ public class HelloApplication extends Application {
                     HelloApplication.class.getResource("/com/example/capstone/rider-dashboard-view.fxml"));
             Scene scene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             stage.setTitle("Rider Dashboard");
+            stage.setScene(scene);
+
+        } else if (existingUser instanceof Admin admin) {
+            FXMLLoader loader = new FXMLLoader(
+                    HelloApplication.class.getResource("/com/example/capstone/admin-dashboard-view.fxml"));
+            Scene scene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
+            AdminDashboardController dashController = loader.getController();
+            dashController.setAdmin(admin);
+            stage.setTitle("Admin Dashboard");
             stage.setScene(scene);
 
         } else {

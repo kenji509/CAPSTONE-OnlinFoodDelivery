@@ -13,6 +13,9 @@ import java.io.IOException;
 
 public class RegisterController {
 
+    private static final double WINDOW_WIDTH  = 400;
+    private static final double WINDOW_HEIGHT = 720;
+
     @FXML private TextField nameField;
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
@@ -49,6 +52,12 @@ public class RegisterController {
             return;
         }
 
+        if (customerDAO.emailExists(email)) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("This email is already registered.");
+            return;
+        }
+
         String userId = "C-" + System.currentTimeMillis();
         Customer newCustomer = new Customer(userId, name, email, password, contact, address);
 
@@ -67,7 +76,7 @@ public class RegisterController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/login-view.fxml"));
-            Scene loginScene = new Scene(loader.load());
+            Scene loginScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             Stage stage = (Stage) messageLabel.getScene().getWindow();
             stage.setScene(loginScene);
             stage.setTitle("Login");

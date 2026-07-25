@@ -5,25 +5,28 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.capstone.controller.RestaurantSelectionController"
+            fx:controller="com.example.capstone.controller.AdminDashboardController"
             stylesheets="@style.css">
 
     <top>
         <VBox styleClass="header-bar" alignment="CENTER_LEFT" spacing="4">
-            <Label text="🍴  Choose a Restaurant" styleClass="header-bar-label"/>
+            <Label fx:id="titleLabel" styleClass="header-bar-label"/>
         </VBox>
     </top>
 
     <center>
         <VBox styleClass="content-area" spacing="10">
-            <ListView fx:id="restaurantListView"/>
-            <Label fx:id="messageLabel" styleClass="error-label"/>
+            <HBox spacing="10">
+                <Button text="👥 Users" onAction="#onViewUsersClick"/>
+                <Button text="🍴 Restaurants" onAction="#onViewRestaurantsClick"/>
+                <Button text="📊 Reports" onAction="#onViewReportsClick"/>
+            </HBox>
+            <TextArea fx:id="outputArea" editable="false" wrapText="true" prefHeight="450"/>
         </VBox>
     </center>
 
     <bottom>
-        <HBox styleClass="footer-area" spacing="12" alignment="CENTER_RIGHT">
-            <Button text="View Menu" onAction="#onViewMenuClick"/>
+        <HBox styleClass="footer-area" alignment="CENTER_RIGHT">
             <Button text="Logout" onAction="#onLogoutClick" styleClass="danger-button"/>
         </HBox>
     </bottom>

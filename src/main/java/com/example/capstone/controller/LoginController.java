@@ -15,6 +15,9 @@ import java.io.IOException;
 
 public class LoginController {
 
+    private static final double WINDOW_WIDTH  = 400;
+    private static final double WINDOW_HEIGHT = 720;
+
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
@@ -42,7 +45,7 @@ public class LoginController {
                 try {
                     FXMLLoader loader = new FXMLLoader(
                             getClass().getResource("/com/example/capstone/restaurant-selection-view.fxml"));
-                    Scene selectionScene = new Scene(loader.load());
+                    Scene selectionScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
                     RestaurantSelectionController selectionController = loader.getController();
                     selectionController.setCustomer(customer);
                     Stage stage = (Stage) errorLabel.getScene().getWindow();
@@ -69,7 +72,7 @@ public class LoginController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/register-view.fxml"));
-            Scene registerScene = new Scene(loader.load());
+            Scene registerScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             Stage stage = (Stage) errorLabel.getScene().getWindow();
             stage.setScene(registerScene);
             stage.setTitle("Register");
@@ -83,10 +86,24 @@ public class LoginController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/rider-login-view.fxml"));
-            Scene riderScene = new Scene(loader.load());
+            Scene riderScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             Stage stage = (Stage) errorLabel.getScene().getWindow();
             stage.setScene(riderScene);
             stage.setTitle("Rider Login");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void onGoToAdminLoginClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/capstone/admin-login-view.fxml"));
+            Scene adminScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
+            Stage stage = (Stage) errorLabel.getScene().getWindow();
+            stage.setScene(adminScene);
+            stage.setTitle("Admin Login");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,7 +1,7 @@
 package com.example.capstone.controller;
 
-import com.example.capstone.dao.RiderDAO;
-import com.example.capstone.model.Rider;
+import com.example.capstone.dao.AdminDAO;
+import com.example.capstone.model.Admin;
 import com.example.capstone.util.SessionManager;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class RiderLoginController {
+public class AdminLoginController {
 
     private static final double WINDOW_WIDTH  = 400;
     private static final double WINDOW_HEIGHT = 720;
@@ -22,7 +22,7 @@ public class RiderLoginController {
     @FXML private PasswordField passwordField;
     @FXML private Label errorLabel;
 
-    private final RiderDAO riderDAO = new RiderDAO();
+    private final AdminDAO adminDAO = new AdminDAO();
 
     @FXML
     protected void onLoginButtonClick() {
@@ -31,26 +31,26 @@ public class RiderLoginController {
 
         errorLabel.setText("Logging in...");
 
-        Task<Rider> loginTask = new Task<>() {
+        Task<Admin> loginTask = new Task<>() {
             @Override
-            protected Rider call() {
-                return riderDAO.login(email, password);
+            protected Admin call() {
+                return adminDAO.login(email, password);
             }
         };
 
         loginTask.setOnSucceeded(event -> {
-            Rider rider = loginTask.getValue();
-            if (rider != null) {
-                SessionManager.saveSession(rider);
+            Admin admin = loginTask.getValue();
+            if (admin != null) {
+                SessionManager.saveSession(admin);
                 try {
                     FXMLLoader loader = new FXMLLoader(
-                            getClass().getResource("/com/example/capstone/rider-dashboard-view.fxml"));
+                            getClass().getResource("/com/example/capstone/admin-dashboard-view.fxml"));
                     Scene dashScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
-                    RiderDashboardController dashController = loader.getController();
-                    dashController.setRider(rider);
+                    AdminDashboardController dashController = loader.getController();
+                    dashController.setAdmin(admin);
                     Stage stage = (Stage) errorLabel.getScene().getWindow();
                     stage.setScene(dashScene);
-                    stage.setTitle("Rider Dashboard");
+                    stage.setTitle("Admin Dashboard");
                 } catch (IOException e) {
                     e.printStackTrace();
                     errorLabel.setText("Error loading dashboard");
@@ -68,21 +68,7 @@ public class RiderLoginController {
     }
 
     @FXML
-    protected void onGoToRegisterClick() {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/example/capstone/rider-register-view.fxml"));
-            Scene registerScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
-            Stage stage = (Stage) errorLabel.getScene().getWindow();
-            stage.setScene(registerScene);
-            stage.setTitle("Rider Register");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    protected void onBackToMainLoginClick() {
+    protected void onBackToLoginClick() {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/login-view.fxml"));

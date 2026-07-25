@@ -5,22 +5,21 @@
 
 <VBox alignment="CENTER" spacing="16" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.controller.RiderLoginController"
+      fx:controller="com.example.capstone.controller.AdminLoginController"
       stylesheets="@style.css">
     <padding>
         <Insets top="50" right="45" bottom="50" left="45"/>
     </padding>
 
-    <Label text="🚴" style="-fx-font-size: 40px;"/>
-    <Label text="Rider Login" styleClass="header-label"/>
+    <Label text="🔧" style="-fx-font-size: 40px;"/>
+    <Label text="Admin Login" styleClass="header-label"/>
 
     <TextField fx:id="emailField" promptText="Email"/>
     <PasswordField fx:id="passwordField" promptText="Password"/>
 
     <Button text="Login" onAction="#onLoginButtonClick"/>
-    <Hyperlink text="New rider? Register" onAction="#onGoToRegisterClick"/>
 
     <Label fx:id="errorLabel" styleClass="error-label"/>
 
-    <Button text="← Back to Login" onAction="#onBackToMainLoginClick" styleClass="secondary-button"/>
+    <Button text="← Back to Login" onAction="#onBackToLoginClick" styleClass="secondary-button"/>
 </VBox>

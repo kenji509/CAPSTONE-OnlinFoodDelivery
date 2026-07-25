@@ -3,26 +3,45 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="16" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.controller.LoginController"
-      stylesheets="@style.css">
-    <padding>
-        <Insets top="50" right="45" bottom="50" left="45"/>
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.capstone.controller.LoginController"
+            stylesheets="@style.css">
 
-    <Label text="🍽️" style="-fx-font-size: 40px;"/>
-    <Label text="Online Food Delivery System" styleClass="header-label"/>
-    <Label text="Sign in to your account" styleClass="subheader-label"/>
+    <top>
+        <HBox alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="14" bottom="0" left="0"/>
+            </padding>
+            <MenuButton text="⋮" styleClass="corner-menu-button">
+                <items>
+                    <MenuItem text="Login as Admin" onAction="#onGoToAdminLoginClick"/>
+                </items>
+            </MenuButton>
+        </HBox>
+    </top>
 
-    <VBox spacing="10" alignment="CENTER">
-        <TextField fx:id="emailField" promptText="Email"/>
-        <PasswordField fx:id="passwordField" promptText="Password"/>
-    </VBox>
+    <center>
+        <VBox alignment="CENTER" spacing="16">
+            <padding>
+                <Insets top="20" right="45" bottom="50" left="45"/>
+            </padding>
 
-    <Button text="Login" onAction="#onLoginButtonClick"/>
-    <Hyperlink text="Don't have an account? Register" onAction="#onGoToRegisterClick"/>
-    <Hyperlink text="🚴 Login as Rider instead" onAction="#onGoToRiderLoginClick"/>
+            <Label text="🍴" style="-fx-font-size: 40px;"/>
+            <Label text="Online Food Delivery System" styleClass="header-label"/>
+            <Label text="Sign in to your account" styleClass="subheader-label"/>
 
-    <Label fx:id="errorLabel" styleClass="error-label"/>
-</VBox>
+            <VBox spacing="10" alignment="CENTER">
+                <TextField fx:id="emailField" promptText="Email"/>
+                <PasswordField fx:id="passwordField" promptText="Password"/>
+            </VBox>
+
+            <Button text="Login" onAction="#onLoginButtonClick"/>
+            <Hyperlink text="Don't have an account? Register" onAction="#onGoToRegisterClick"/>
+            <Hyperlink text="🚴 Login as Rider instead" onAction="#onGoToRiderLoginClick"/>
+
+            <Label fx:id="errorLabel" styleClass="error-label"/>
+        </VBox>
+    </center>
+
+</BorderPane>

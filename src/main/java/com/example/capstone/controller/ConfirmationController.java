@@ -11,6 +11,9 @@ import java.io.IOException;
 
 public class ConfirmationController {
 
+    private static final double WINDOW_WIDTH  = 400;
+    private static final double WINDOW_HEIGHT = 720;
+
     @FXML private Label orderIdLabel;
     @FXML private Label statusLabel;
     @FXML private Label totalLabel;
@@ -50,11 +53,27 @@ public class ConfirmationController {
     }
 
     @FXML
+    protected void onRateRestaurantClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/capstone/review-view.fxml"));
+            Scene reviewScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
+            ReviewController reviewController = loader.getController();
+            reviewController.setData(order.getCustomer(), order.getRestaurant());
+            Stage stage = (Stage) totalLabel.getScene().getWindow();
+            stage.setScene(reviewScene);
+            stage.setTitle("Rate Restaurant");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     protected void onBackToHomeClick() {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/restaurant-selection-view.fxml"));
-            Scene selectionScene = new Scene(loader.load());
+            Scene selectionScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             RestaurantSelectionController selectionController = loader.getController();
             selectionController.setCustomer(order.getCustomer());
             Stage stage = (Stage) totalLabel.getScene().getWindow();

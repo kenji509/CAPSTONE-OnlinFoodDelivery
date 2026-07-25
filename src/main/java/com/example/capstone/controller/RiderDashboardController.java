@@ -19,6 +19,9 @@ import java.util.List;
 
 public class RiderDashboardController {
 
+    private static final double WINDOW_WIDTH  = 400;
+    private static final double WINDOW_HEIGHT = 720;
+
     @FXML private ListView<String> ordersListView;
     @FXML private Label statusLabel;
 
@@ -86,7 +89,7 @@ public class RiderDashboardController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/login-view.fxml"));
-            Scene loginScene = new Scene(loader.load());
+            Scene loginScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             Stage stage = (Stage) statusLabel.getScene().getWindow();
             stage.setScene(loginScene);
             stage.setTitle("Login");

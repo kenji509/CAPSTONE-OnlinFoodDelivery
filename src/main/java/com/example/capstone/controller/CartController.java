@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class CartController {
+
+    private static final double WINDOW_WIDTH  = 400;
+    private static final double WINDOW_HEIGHT = 720;
+
     @FXML private ListView<String> cartListView;
     @FXML private Label totalLabel;
     private List<OrderItem> cartItems;
@@ -51,7 +55,7 @@ public class CartController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/capstone/confirmation-view.fxml"));
-            Scene confirmScene = new Scene(loader.load());
+            Scene confirmScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             ConfirmationController confirmController = loader.getController();
             confirmController.setOrderData(order);
             Stage stage = (Stage) totalLabel.getScene().getWindow();

@@ -13,6 +13,9 @@ import java.io.IOException;
 
 public class RiderRegisterController {
 
+    private static final double WINDOW_WIDTH  = 400;
+    private static final double WINDOW_HEIGHT = 720;
+
     @FXML private TextField nameField;
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
@@ -73,7 +76,7 @@ public class RiderRegisterController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/rider-login-view.fxml"));
-            Scene loginScene = new Scene(loader.load());
+            Scene loginScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             Stage stage = (Stage) messageLabel.getScene().getWindow();
             stage.setScene(loginScene);
             stage.setTitle("Rider Login");

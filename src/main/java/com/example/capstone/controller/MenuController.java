@@ -27,6 +27,9 @@ import java.util.List;
 
 public class MenuController {
 
+    private static final double WINDOW_WIDTH  = 400;
+    private static final double WINDOW_HEIGHT = 720;
+
     @FXML private ListView<MenuItem> menuListView;
     @FXML private Label cartLabel;
     @FXML private Label restaurantNameLabel;
@@ -124,7 +127,7 @@ public class MenuController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/cart-view.fxml"));
-            Scene cartScene = new Scene(loader.load());
+            Scene cartScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             CartController cartController = loader.getController();
             cartController.setCartData(cartItems, restaurant, loggedInCustomer);
             Stage stage = (Stage) cartLabel.getScene().getWindow();
@@ -140,7 +143,7 @@ public class MenuController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/order-history-view.fxml"));
-            Scene historyScene = new Scene(loader.load());
+            Scene historyScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             OrderHistoryController historyController = loader.getController();
             historyController.setCustomer(loggedInCustomer);
             Stage stage = (Stage) cartLabel.getScene().getWindow();
@@ -156,7 +159,7 @@ public class MenuController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/restaurant-selection-view.fxml"));
-            Scene selectionScene = new Scene(loader.load());
+            Scene selectionScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             RestaurantSelectionController selectionController = loader.getController();
             selectionController.setCustomer(loggedInCustomer);
             Stage stage = (Stage) cartLabel.getScene().getWindow();
@@ -173,7 +176,7 @@ public class MenuController {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/login-view.fxml"));
-            Scene loginScene = new Scene(loader.load());
+            Scene loginScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
             Stage stage = (Stage) cartLabel.getScene().getWindow();
             stage.setScene(loginScene);
             stage.setTitle("Login");

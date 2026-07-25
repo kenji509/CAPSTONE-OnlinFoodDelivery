@@ -21,7 +21,7 @@
     <TextField fx:id="vehicleField" promptText="Vehicle Type (e.g. Motorcycle)"/>
 
     <Button text="Register" onAction="#onRegisterButtonClick"/>
-    <Hyperlink text="Already have an account? Login" onAction="#onGoToLoginClick"/>
-
     <Label fx:id="messageLabel"/>
+
+    <Button text="← Back to Login" onAction="#onGoToLoginClick" styleClass="secondary-button"/>
 </VBox>

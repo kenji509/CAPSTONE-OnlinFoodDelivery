@@ -4,6 +4,8 @@ import com.example.capstone.model.Rider;
 import com.example.capstone.util.MySQLConnection;
 import com.example.capstone.util.PasswordUtil;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RiderDAO {
 
@@ -59,6 +61,27 @@ public class RiderDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Rider> getAllRiders() {
+        List<Rider> riders = new ArrayList<>();
+        String sql = "SELECT * FROM riders";
+        try (Connection conn = MySQLConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                riders.add(new Rider(
+                        rs.getString("userId"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("contactNumber"),
+                        rs.getString("vehicleType"), ""));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return riders;
     }
 
     public boolean updateProfile(String userId, String name, String contactNumber, String vehicleType) {

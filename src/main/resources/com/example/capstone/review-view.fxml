@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="14" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.capstone.controller.ReviewController"
+      stylesheets="@style.css">
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <Label text="⭐" style="-fx-font-size: 36px;"/>
+    <Label text="Rate This Restaurant" styleClass="header-label"/>
+
+    <ComboBox fx:id="ratingComboBox" promptText="Select rating (1-5)"/>
+    <TextArea fx:id="commentArea" promptText="Leave a comment (optional)" prefRowCount="4" wrapText="true"/>
+
+    <Button text="Submit Review" onAction="#onSubmitReviewClick"/>
+    <Label fx:id="messageLabel"/>
+
+    <Button text="← Back to Restaurants" onAction="#onBackToHomeClick" styleClass="secondary-button"/>
+</VBox>

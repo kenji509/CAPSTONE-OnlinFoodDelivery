@@ -108,6 +108,22 @@ public class RestaurantSelectionController {
     }
 
     @FXML
+    protected void onViewOrderHistoryClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/capstone/order-history-view.fxml"));
+            Scene historyScene = new Scene(loader.load(), WINDOW_WIDTH, WINDOW_HEIGHT);
+            OrderHistoryController historyController = loader.getController();
+            historyController.setCustomer(loggedInCustomer);
+            Stage stage = (Stage) restaurantListView.getScene().getWindow();
+            stage.setScene(historyScene);
+            stage.setTitle("Order History");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     protected void onLogoutClick() {
         SessionManager.clearSession();
         try {

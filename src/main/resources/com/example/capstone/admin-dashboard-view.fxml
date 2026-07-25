@@ -16,11 +16,16 @@
 
     <center>
         <VBox styleClass="content-area" spacing="10">
-            <HBox spacing="10">
-                <Button text="👥 Users" onAction="#onViewUsersClick"/>
-                <Button text="🍴 Restaurants" onAction="#onViewRestaurantsClick"/>
-                <Button text="📊 Reports" onAction="#onViewReportsClick"/>
-            </HBox>
+            <GridPane hgap="6">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33.33" halignment="CENTER"/>
+                    <ColumnConstraints percentWidth="33.33" halignment="CENTER"/>
+                    <ColumnConstraints percentWidth="33.33" halignment="CENTER"/>
+                </columnConstraints>
+                <Button text="Users" onAction="#onViewUsersClick" styleClass="footer-button" maxWidth="Infinity" GridPane.columnIndex="0"/>
+                <Button text="Restaurants" onAction="#onViewRestaurantsClick" styleClass="footer-button" maxWidth="Infinity" GridPane.columnIndex="1"/>
+                <Button text="Reports" onAction="#onViewReportsClick" styleClass="footer-button" maxWidth="Infinity" GridPane.columnIndex="2"/>
+            </GridPane>
             <TextArea fx:id="outputArea" editable="false" wrapText="true" prefHeight="450"/>
         </VBox>
     </center>

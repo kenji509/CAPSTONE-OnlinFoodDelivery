@@ -22,8 +22,9 @@
     </center>
 
     <bottom>
-        <HBox styleClass="footer-area" spacing="12" alignment="CENTER_RIGHT">
+        <HBox styleClass="footer-area" spacing="8" alignment="CENTER">
             <Button text="View Menu" onAction="#onViewMenuClick"/>
+            <Button text="History" onAction="#onViewOrderHistoryClick" styleClass="secondary-button"/>
             <Button text="Logout" onAction="#onLogoutClick" styleClass="danger-button"/>
         </HBox>
     </bottom>

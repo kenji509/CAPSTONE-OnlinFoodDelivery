@@ -22,17 +22,23 @@
     </center>
 
     <bottom>
-        <VBox styleClass="footer-area" spacing="10">
+        <VBox styleClass="footer-area" spacing="12">
             <HBox spacing="12" alignment="CENTER_LEFT">
                 <Button text="+ Add to Cart" onAction="#onAddToCartClick"/>
                 <Label fx:id="cartLabel" text="🛒 Cart: 0 items" styleClass="subheader-label"/>
             </HBox>
-            <HBox spacing="12" alignment="CENTER_RIGHT">
-                <Button text="Checkout" onAction="#onCheckoutClick"/>
-                <Button text="📋 Order History" onAction="#onViewOrderHistoryClick" styleClass="secondary-button"/>
-                <Button text="← Restaurants" onAction="#onBackToRestaurantsClick" styleClass="secondary-button"/>
-                <Button text="Logout" onAction="#onLogoutClick" styleClass="danger-button"/>
-            </HBox>
+            <GridPane hgap="6">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="25" halignment="CENTER"/>
+                    <ColumnConstraints percentWidth="25" halignment="CENTER"/>
+                    <ColumnConstraints percentWidth="25" halignment="CENTER"/>
+                    <ColumnConstraints percentWidth="25" halignment="CENTER"/>
+                </columnConstraints>
+                <Button text="Checkout" onAction="#onCheckoutClick" styleClass="footer-button" maxWidth="Infinity" GridPane.columnIndex="0"/>
+                <Button text="History" onAction="#onViewOrderHistoryClick" styleClass="footer-button,secondary-button" maxWidth="Infinity" GridPane.columnIndex="1"/>
+                <Button text="Back" onAction="#onBackToRestaurantsClick" styleClass="footer-button,secondary-button" maxWidth="Infinity" GridPane.columnIndex="2"/>
+                <Button text="Logout" onAction="#onLogoutClick" styleClass="footer-button,danger-button" maxWidth="Infinity" GridPane.columnIndex="3"/>
+            </GridPane>
         </VBox>
     </bottom>
 

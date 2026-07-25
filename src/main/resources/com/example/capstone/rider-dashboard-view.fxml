@@ -22,10 +22,10 @@
     </center>
 
     <bottom>
-        <VBox styleClass="footer-area" spacing="10">
+        <VBox styleClass="footer-area" spacing="8">
             <Label fx:id="statusLabel"/>
-            <HBox spacing="12" alignment="CENTER_RIGHT">
-                <Button text="Accept Selected Order" onAction="#onAcceptOrderClick"/>
+            <HBox spacing="10">
+                <Button text="Accept Order" onAction="#onAcceptOrderClick"/>
                 <Button text="Logout" onAction="#onLogoutClick" styleClass="danger-button"/>
             </HBox>
         </VBox>

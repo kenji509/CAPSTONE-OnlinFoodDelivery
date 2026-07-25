@@ -20,7 +20,7 @@ and orders.
 - **Session management:** Login state is preserved using Java Serialization
   (see below).
 - **Database-backed persistence:** All customers, riders, restaurants, menu
-  items, and orders are stored in and retrieved from a MySQL database.
+![img.png](img.png)  items, and orders are stored in and retrieved from a MySQL database.
 
 ## Project Structure
 

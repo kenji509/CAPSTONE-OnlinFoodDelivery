@@ -3,17 +3,32 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="TOP_CENTER" spacing="15" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.controller.RiderDashboardController">
-    <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.capstone.controller.RiderDashboardController"
+            stylesheets="@style.css">
 
-    <Label text="Rider Dashboard" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-    <Label text="Pending Orders"/>
-    <ListView fx:id="ordersListView" prefHeight="300"/>
-    <Button text="Accept Selected Order" onAction="#onAcceptOrderClick"/>
-    <Label fx:id="statusLabel"/>
-    <Button text="Logout" onAction="#onLogoutClick" style="-fx-text-fill: red;"/>
-</VBox>
+    <top>
+        <VBox styleClass="header-bar" alignment="CENTER_LEFT" spacing="4">
+            <Label text="🚴  Rider Dashboard" styleClass="header-bar-label"/>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox styleClass="content-area" spacing="10">
+            <Label text="📦  Pending Orders" styleClass="subheader-label"/>
+            <ListView fx:id="ordersListView"/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox styleClass="footer-area" spacing="10">
+            <Label fx:id="statusLabel"/>
+            <HBox spacing="12" alignment="CENTER_RIGHT">
+                <Button text="Accept Selected Order" onAction="#onAcceptOrderClick"/>
+                <Button text="Logout" onAction="#onLogoutClick" styleClass="danger-button"/>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

@@ -8,20 +8,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
 public class RestaurantSelectionController {
 
-    @FXML private ListView<String> restaurantListView;
+    @FXML private ListView<Restaurant> restaurantListView;
     @FXML private Label messageLabel;
 
     private final RestaurantDAO restaurantDAO = new RestaurantDAO();
-    private List<Restaurant> restaurants;
     private Customer loggedInCustomer;
 
     public void setCustomer(Customer customer) {
@@ -30,22 +36,59 @@ public class RestaurantSelectionController {
 
     @FXML
     public void initialize() {
-        restaurants = restaurantDAO.getAllRestaurants();
-        ObservableList<String> displayItems = FXCollections.observableArrayList();
-        for (Restaurant r : restaurants) {
-            displayItems.add(r.getName() + " - " + r.getRestaurantId());
-        }
-        restaurantListView.setItems(displayItems);
+        List<Restaurant> restaurants = restaurantDAO.getAllRestaurants();
+        ObservableList<Restaurant> items = FXCollections.observableArrayList(restaurants);
+        restaurantListView.setItems(items);
+
+        restaurantListView.setCellFactory(list -> new ListCell<>() {
+            @Override
+            protected void updateItem(Restaurant restaurant, boolean empty) {
+                super.updateItem(restaurant, empty);
+                if (empty || restaurant == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    ImageView logo = new ImageView(loadLogo(restaurant.getRestaurantId()));
+                    logo.setFitWidth(50);
+                    logo.setFitHeight(50);
+                    logo.setPreserveRatio(true);
+
+                    Label name = new Label(restaurant.getName());
+                    name.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+
+                    Label address = new Label(restaurant.getAddress());
+                    address.setStyle("-fx-font-size: 11px; -fx-text-fill: #888888;");
+
+                    VBox textBox = new VBox(2, name, address);
+                    HBox row = new HBox(12, logo, textBox);
+                    row.setAlignment(Pos.CENTER_LEFT);
+                    row.setPadding(new Insets(2));
+
+                    setGraphic(row);
+                    setText(null);
+                }
+            }
+        });
+    }
+
+    private Image loadLogo(String restaurantId) {
+        String filename = switch (restaurantId) {
+            case "R1" -> "Jollibee.png";
+            case "R2" -> "Mag_inasal.png";
+            case "R3" -> "Chowking.png";
+            default -> null;
+        };
+        if (filename == null) return null;
+        return new Image(getClass().getResourceAsStream("/com/example/capstone/images/" + filename));
     }
 
     @FXML
     protected void onViewMenuClick() {
-        int selectedIndex = restaurantListView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex < 0) {
+        Restaurant selected = restaurantListView.getSelectionModel().getSelectedItem();
+        if (selected == null) {
             messageLabel.setText("Please select a restaurant first");
             return;
         }
-        Restaurant selected = restaurants.get(selectedIndex);
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/capstone/menu-view.fxml"));

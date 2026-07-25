@@ -52,4 +52,5 @@ public class Order {
     public Customer getCustomer()       { return customer; }
     public Restaurant getRestaurant()   { return restaurant; }
     public List<OrderItem> getItems()   { return items; }
+    public Payment getPayment()         { return payment; }
 }

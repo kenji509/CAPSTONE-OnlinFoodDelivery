@@ -26,7 +26,11 @@ public class Payment {
         return true;
     }
 
-    public void refund()                 { this.paymentStatus = "Refunded"; }
-    public String getPaymentStatus()     { return paymentStatus; }
-    public double getAmount()            { return amount; }
+    public void refund() {
+        this.paymentStatus = "Refunded";
+    }
+
+    public String getPaymentStatus() { return paymentStatus; }
+    public double getAmount()        { return amount; }
+    public String getPaymentMethod() { return paymentMethod; }
 }

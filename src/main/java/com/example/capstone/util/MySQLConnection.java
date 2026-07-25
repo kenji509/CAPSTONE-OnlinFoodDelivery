@@ -8,14 +8,14 @@ public class MySQLConnection {
 
     private static MySQLConnection instance;
 
-    private static final String URL      = "jdbc:mysql://localhost:3306/fooddelivery";
+    private static final String URL      = "jdbc:mysql://127.0.0.1:3306/fooddelivery";
     private static final String USER     = "root";
     private static final String PASSWORD = "";
 
     private MySQLConnection() {
     }
 
-    public static MySQLConnection getInstance() {
+    public static synchronized MySQLConnection getInstance() {
         if (instance == null) {
             instance = new MySQLConnection();
         }

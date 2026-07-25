@@ -1,0 +1,172 @@
+.root {
+    -fx-background-color: #FFF8F0;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* ----- Header bar ----- */
+.header-bar {
+    -fx-background-color: #D9480F;
+    -fx-padding: 18px 24px;
+}
+
+.header-bar-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* ----- Headers (for simple form screens) ----- */
+.header-label {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #D9480F;
+}
+
+.subheader-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #777777;
+}
+
+/* ----- Content area padding ----- */
+.content-area {
+    -fx-padding: 20px 24px;
+}
+
+.footer-area {
+    -fx-padding: 14px 24px;
+    -fx-background-color: #FFF3E8;
+    -fx-border-color: #F0DCC6 transparent transparent transparent;
+    -fx-border-width: 1px 0 0 0;
+}
+
+/* ----- Text Fields ----- */
+.text-field, .password-field {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-color: #E8CBB0;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px 12px;
+    -fx-font-size: 13px;
+    -fx-pref-width: 270px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #D9480F;
+    -fx-border-width: 1.5px;
+}
+
+/* ----- Primary Buttons ----- */
+.button {
+    -fx-background-color: #D9480F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px 22px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #B8390C;
+}
+
+.button:pressed {
+    -fx-background-color: #96300A;
+}
+
+/* ----- Secondary Buttons (outline style) ----- */
+.secondary-button {
+    -fx-background-color: white;
+    -fx-text-fill: #D9480F;
+    -fx-border-color: #D9480F;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 22px;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #FDEEE5;
+}
+
+/* ----- Danger Buttons (Logout / Cancel) ----- */
+.danger-button {
+    -fx-background-color: white;
+    -fx-text-fill: #D62828;
+    -fx-border-color: #D62828;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 22px;
+    -fx-cursor: hand;
+}
+
+.danger-button:hover {
+    -fx-background-color: #FCEAEA;
+}
+
+/* ----- Hyperlinks ----- */
+.hyperlink {
+    -fx-text-fill: #D9480F;
+    -fx-font-size: 12px;
+    -fx-border-color: transparent;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #B8390C;
+    -fx-underline: true;
+}
+
+/* ----- ListView - card-style rows ----- */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 4px;
+}
+
+.list-view .list-cell {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-border-color: #F0DCC6;
+    -fx-border-radius: 12px;
+    -fx-border-width: 1px;
+    -fx-padding: 14px 16px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+}
+
+.list-view .list-cell:filled {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 4, 0, 0, 2);
+}
+
+.list-view .list-cell:filled:hover {
+    -fx-border-color: #E8A87C;
+    -fx-background-color: #FFFBF7;
+}
+
+.list-view .list-cell:filled:selected {
+    -fx-background-color: #FFF0E4;
+    -fx-border-color: #D9480F;
+    -fx-border-width: 1.5px;
+    -fx-text-fill: #B8390C;
+    -fx-font-weight: bold;
+}
+
+/* ----- Error / Status Labels ----- */
+.error-label {
+    -fx-text-fill: #D62828;
+    -fx-font-size: 12px;
+}
+
+.success-label {
+    -fx-text-fill: #2E7D32;
+    -fx-font-size: 12px;
+}
+
+/* ----- Total / Emphasis Labels ----- */
+.total-label {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #D9480F;
+}

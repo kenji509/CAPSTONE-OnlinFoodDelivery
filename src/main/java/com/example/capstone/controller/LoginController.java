@@ -3,6 +3,7 @@ package com.example.capstone.controller;
 import com.example.capstone.dao.CustomerDAO;
 import com.example.capstone.model.Customer;
 import com.example.capstone.util.SessionManager;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,25 +25,43 @@ public class LoginController {
     protected void onLoginButtonClick() {
         String email    = emailField.getText();
         String password = passwordField.getText();
-        Customer customer = customerDAO.login(email, password);
-        if (customer != null) {
-            SessionManager.saveSession(customer);
-            try {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/com/example/capstone/restaurant-selection-view.fxml"));
-                Scene selectionScene = new Scene(loader.load());
-                RestaurantSelectionController selectionController = loader.getController();
-                selectionController.setCustomer(customer);
-                Stage stage = (Stage) errorLabel.getScene().getWindow();
-                stage.setScene(selectionScene);
-                stage.setTitle("Choose a Restaurant");
-            } catch (IOException e) {
-                e.printStackTrace();
-                errorLabel.setText("Error loading menu screen");
+
+        errorLabel.setText("Logging in...");
+
+        Task<Customer> loginTask = new Task<>() {
+            @Override
+            protected Customer call() {
+                return customerDAO.login(email, password);
             }
-        } else {
-            errorLabel.setText("Invalid email or password");
-        }
+        };
+
+        loginTask.setOnSucceeded(event -> {
+            Customer customer = loginTask.getValue();
+            if (customer != null) {
+                SessionManager.saveSession(customer);
+                try {
+                    FXMLLoader loader = new FXMLLoader(
+                            getClass().getResource("/com/example/capstone/restaurant-selection-view.fxml"));
+                    Scene selectionScene = new Scene(loader.load());
+                    RestaurantSelectionController selectionController = loader.getController();
+                    selectionController.setCustomer(customer);
+                    Stage stage = (Stage) errorLabel.getScene().getWindow();
+                    stage.setScene(selectionScene);
+                    stage.setTitle("Choose a Restaurant");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    errorLabel.setText("Error loading menu screen");
+                }
+            } else {
+                errorLabel.setText("Invalid email or password");
+            }
+        });
+
+        loginTask.setOnFailed(event -> errorLabel.setText("Login failed. Please try again."));
+
+        Thread loginThread = new Thread(loginTask);
+        loginThread.setDaemon(true);
+        loginThread.start();
     }
 
     @FXML

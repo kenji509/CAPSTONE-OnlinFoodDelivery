@@ -3,22 +3,37 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="TOP_CENTER" spacing="15" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.controller.MenuController">
-    <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.capstone.controller.MenuController"
+            stylesheets="@style.css">
 
-    <Label fx:id="restaurantNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <top>
+        <VBox styleClass="header-bar" alignment="CENTER_LEFT" spacing="4">
+            <Label fx:id="restaurantNameLabel" styleClass="header-bar-label"/>
+        </VBox>
+    </top>
 
-    <ListView fx:id="menuListView" prefHeight="280"/>
+    <center>
+        <VBox styleClass="content-area" spacing="10">
+            <Label text="🍔  Menu Items" styleClass="subheader-label"/>
+            <ListView fx:id="menuListView"/>
+        </VBox>
+    </center>
 
-    <Button text="Add to Cart" onAction="#onAddToCartClick"/>
-    <Label fx:id="cartLabel" text="Cart: 0 items"/>
+    <bottom>
+        <VBox styleClass="footer-area" spacing="10">
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button text="+ Add to Cart" onAction="#onAddToCartClick"/>
+                <Label fx:id="cartLabel" text="🛒 Cart: 0 items" styleClass="subheader-label"/>
+            </HBox>
+            <HBox spacing="12" alignment="CENTER_RIGHT">
+                <Button text="Checkout" onAction="#onCheckoutClick"/>
+                <Button text="📋 Order History" onAction="#onViewOrderHistoryClick" styleClass="secondary-button"/>
+                <Button text="← Restaurants" onAction="#onBackToRestaurantsClick" styleClass="secondary-button"/>
+                <Button text="Logout" onAction="#onLogoutClick" styleClass="danger-button"/>
+            </HBox>
+        </VBox>
+    </bottom>
 
-    <Button text="Checkout" onAction="#onCheckoutClick"/>
-    <Button text="View Order History" onAction="#onViewOrderHistoryClick"/>
-    <Button text="Back to Restaurants" onAction="#onBackToRestaurantsClick"/>
-    <Button text="Logout" onAction="#onLogoutClick" style="-fx-text-fill: red;"/>
-</VBox>
+</BorderPane>

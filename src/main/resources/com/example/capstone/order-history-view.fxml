@@ -3,17 +3,28 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="TOP_CENTER" spacing="15" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.controller.OrderHistoryController">
-    <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.capstone.controller.OrderHistoryController"
+            stylesheets="@style.css">
 
-    <Label text="Your Order History" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <top>
+        <VBox styleClass="header-bar" alignment="CENTER_LEFT" spacing="4">
+            <Label text="📋  Your Order History" styleClass="header-bar-label"/>
+        </VBox>
+    </top>
 
-    <ListView fx:id="historyListView" prefHeight="300"/>
-    <Label fx:id="emptyLabel"/>
+    <center>
+        <VBox styleClass="content-area" spacing="10">
+            <ListView fx:id="historyListView"/>
+            <Label fx:id="emptyLabel" styleClass="subheader-label"/>
+        </VBox>
+    </center>
 
-    <Button text="Back to Restaurants" onAction="#onBackToHomeClick"/>
-</VBox>
+    <bottom>
+        <HBox styleClass="footer-area" alignment="CENTER_RIGHT">
+            <Button text="← Back to Restaurants" onAction="#onBackToHomeClick" styleClass="secondary-button"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

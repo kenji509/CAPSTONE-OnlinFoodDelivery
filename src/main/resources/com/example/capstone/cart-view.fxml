@@ -3,15 +3,28 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="TOP_CENTER" spacing="15" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.controller.CartController">
-    <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.capstone.controller.CartController"
+            stylesheets="@style.css">
 
-    <Label text="Your Cart" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-    <ListView fx:id="cartListView" prefHeight="250"/>
-    <Label fx:id="totalLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-    <Button text="Place Order" onAction="#onPlaceOrderClick"/>
-</VBox>
+    <top>
+        <VBox styleClass="header-bar" alignment="CENTER_LEFT" spacing="4">
+            <Label text="🛒  Your Cart" styleClass="header-bar-label"/>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox styleClass="content-area" spacing="10">
+            <ListView fx:id="cartListView"/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox styleClass="footer-area" spacing="10">
+            <Label fx:id="totalLabel" styleClass="total-label"/>
+            <Button text="Place Order" onAction="#onPlaceOrderClick"/>
+        </VBox>
+    </bottom>
+
+</BorderPane>

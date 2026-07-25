@@ -3,6 +3,7 @@ package com.example.capstone.controller;
 import com.example.capstone.dao.RiderDAO;
 import com.example.capstone.model.Rider;
 import com.example.capstone.util.SessionManager;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,25 +25,43 @@ public class RiderLoginController {
     protected void onLoginButtonClick() {
         String email    = emailField.getText();
         String password = passwordField.getText();
-        Rider rider = riderDAO.login(email, password);
-        if (rider != null) {
-            SessionManager.saveSession(rider);
-            try {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/com/example/capstone/rider-dashboard-view.fxml"));
-                Scene dashScene = new Scene(loader.load());
-                RiderDashboardController dashController = loader.getController();
-                dashController.setRider(rider);
-                Stage stage = (Stage) errorLabel.getScene().getWindow();
-                stage.setScene(dashScene);
-                stage.setTitle("Rider Dashboard");
-            } catch (IOException e) {
-                e.printStackTrace();
-                errorLabel.setText("Error loading dashboard");
+
+        errorLabel.setText("Logging in...");
+
+        Task<Rider> loginTask = new Task<>() {
+            @Override
+            protected Rider call() {
+                return riderDAO.login(email, password);
             }
-        } else {
-            errorLabel.setText("Invalid email or password");
-        }
+        };
+
+        loginTask.setOnSucceeded(event -> {
+            Rider rider = loginTask.getValue();
+            if (rider != null) {
+                SessionManager.saveSession(rider);
+                try {
+                    FXMLLoader loader = new FXMLLoader(
+                            getClass().getResource("/com/example/capstone/rider-dashboard-view.fxml"));
+                    Scene dashScene = new Scene(loader.load());
+                    RiderDashboardController dashController = loader.getController();
+                    dashController.setRider(rider);
+                    Stage stage = (Stage) errorLabel.getScene().getWindow();
+                    stage.setScene(dashScene);
+                    stage.setTitle("Rider Dashboard");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    errorLabel.setText("Error loading dashboard");
+                }
+            } else {
+                errorLabel.setText("Invalid email or password");
+            }
+        });
+
+        loginTask.setOnFailed(event -> errorLabel.setText("Login failed. Please try again."));
+
+        Thread loginThread = new Thread(loginTask);
+        loginThread.setDaemon(true);
+        loginThread.start();
     }
 
     @FXML

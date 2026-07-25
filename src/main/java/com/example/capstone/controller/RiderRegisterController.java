@@ -1,7 +1,6 @@
 package com.example.capstone.controller;
 
 import com.example.capstone.dao.RiderDAO;
-import com.example.capstone.main.HelloApplication;
 import com.example.capstone.model.Rider;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,15 +24,41 @@ public class RiderRegisterController {
 
     @FXML
     protected void onRegisterButtonClick() {
+        String name     = nameField.getText();
+        String email    = emailField.getText();
+        String password = passwordField.getText();
+        String contact  = contactField.getText();
+        String vehicle  = vehicleField.getText();
+
+        if (name.isBlank() || email.isBlank() || password.isBlank()
+                || contact.isBlank() || vehicle.isBlank()) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("All fields are required.");
+            return;
+        }
+
+        if (!email.matches("^[\\w.+-]+@[\\w-]+\\.[a-zA-Z]{2,}$")) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("Please enter a valid email address.");
+            return;
+        }
+
+        if (password.length() < 6) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("Password must be at least 6 characters.");
+            return;
+        }
+
+        if (riderDAO.emailExists(email)) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("This email is already registered.");
+            return;
+        }
+
         String userId = "R-" + System.currentTimeMillis();
-        Rider newRider = new Rider(
-                userId,
-                nameField.getText(),
-                emailField.getText(),
-                passwordField.getText(),
-                contactField.getText(),
-                vehicleField.getText(), "");
-        boolean success = riderDAO.register(newRider, passwordField.getText());
+        Rider newRider = new Rider(userId, name, email, password, contact, vehicle, "");
+
+        boolean success = riderDAO.register(newRider, password);
         if (success) {
             messageLabel.setStyle("-fx-text-fill: green;");
             messageLabel.setText("Registered! You can now login.");
@@ -47,7 +72,7 @@ public class RiderRegisterController {
     protected void onGoToLoginClick() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    HelloApplication.class.getResource("/com/example/capstone/rider-login-view.fxml"));
+                    getClass().getResource("/com/example/capstone/rider-login-view.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) messageLabel.getScene().getWindow();
             stage.setScene(loginScene);

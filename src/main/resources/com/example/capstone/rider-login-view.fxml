@@ -3,17 +3,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="15" xmlns="http://javafx.com/javafx"
+<VBox alignment="CENTER" spacing="16" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.controller.RiderLoginController">
+      fx:controller="com.example.capstone.controller.RiderLoginController"
+      stylesheets="@style.css">
     <padding>
-        <Insets top="40" right="40" bottom="40" left="40"/>
+        <Insets top="50" right="45" bottom="50" left="45"/>
     </padding>
 
-    <Label text="Rider Login" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <Label text="🚴" style="-fx-font-size: 40px;"/>
+    <Label text="Rider Login" styleClass="header-label"/>
+
     <TextField fx:id="emailField" promptText="Email"/>
     <PasswordField fx:id="passwordField" promptText="Password"/>
+
     <Button text="Login" onAction="#onLoginButtonClick"/>
     <Hyperlink text="New rider? Register" onAction="#onGoToRegisterClick"/>
-    <Label fx:id="errorLabel" style="-fx-text-fill: red;"/>
+
+    <Label fx:id="errorLabel" styleClass="error-label"/>
 </VBox>

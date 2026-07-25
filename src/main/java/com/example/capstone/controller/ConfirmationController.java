@@ -14,6 +14,7 @@ public class ConfirmationController {
     @FXML private Label orderIdLabel;
     @FXML private Label statusLabel;
     @FXML private Label totalLabel;
+    @FXML private Label paymentLabel;
     @FXML private Label cancelMessageLabel;
 
     private Order order;
@@ -24,6 +25,10 @@ public class ConfirmationController {
         orderIdLabel.setText("Order ID: " + order.getOrderId());
         statusLabel.setText("Status: "    + order.getStatus());
         totalLabel.setText("Total: ₱"    + order.getTotalAmount());
+        if (order.getPayment() != null) {
+            paymentLabel.setText("Payment: " + order.getPayment().getPaymentMethod()
+                    + " (" + order.getPayment().getPaymentStatus() + ")");
+        }
     }
 
     @FXML
@@ -33,6 +38,11 @@ public class ConfirmationController {
             cancelMessageLabel.setStyle("-fx-text-fill: green;");
             cancelMessageLabel.setText("Order cancelled successfully.");
             statusLabel.setText("Status: " + order.getStatus());
+            if (order.getPayment() != null) {
+                order.getPayment().refund();
+                paymentLabel.setText("Payment: " + order.getPayment().getPaymentMethod()
+                        + " (" + order.getPayment().getPaymentStatus() + ")");
+            }
         } else {
             cancelMessageLabel.setStyle("-fx-text-fill: red;");
             cancelMessageLabel.setText("Failed to cancel order.");

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -23,6 +24,30 @@ public class OrderHistoryController {
     public void setCustomer(Customer customer) {
         this.customer = customer;
         loadHistory();
+    }
+
+    @FXML
+    public void initialize() {
+        historyListView.setCellFactory(list -> new ListCell<>() {
+            private final Label label = new Label();
+            {
+                label.setWrapText(true);
+                label.maxWidthProperty().bind(list.widthProperty().subtract(40));
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+                    label.setText(item);
+                    setGraphic(label);
+                    setText(null);
+                }
+            }
+        });
     }
 
     private void loadHistory() {

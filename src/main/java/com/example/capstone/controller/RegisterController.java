@@ -1,7 +1,6 @@
 package com.example.capstone.controller;
 
 import com.example.capstone.dao.CustomerDAO;
-import com.example.capstone.main.HelloApplication;
 import com.example.capstone.model.Customer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,14 +24,34 @@ public class RegisterController {
 
     @FXML
     protected void onRegisterButtonClick() {
+        String name     = nameField.getText();
+        String email    = emailField.getText();
+        String password = passwordField.getText();
+        String contact  = contactField.getText();
+        String address  = addressField.getText();
+
+        if (name.isBlank() || email.isBlank() || password.isBlank()
+                || contact.isBlank() || address.isBlank()) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("All fields are required.");
+            return;
+        }
+
+        if (!email.matches("^[\\w.+-]+@[\\w-]+\\.[a-zA-Z]{2,}$")) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("Please enter a valid email address.");
+            return;
+        }
+
+        if (password.length() < 6) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("Password must be at least 6 characters.");
+            return;
+        }
+
         String userId = "C-" + System.currentTimeMillis();
-        Customer newCustomer = new Customer(
-                userId,
-                nameField.getText(),
-                emailField.getText(),
-                passwordField.getText(),
-                contactField.getText(),
-                addressField.getText());
+        Customer newCustomer = new Customer(userId, name, email, password, contact, address);
+
         boolean success = customerDAO.register(newCustomer);
         if (success) {
             messageLabel.setStyle("-fx-text-fill: green;");
@@ -47,7 +66,7 @@ public class RegisterController {
     protected void onGoToLoginClick() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    HelloApplication.class.getResource("/com/example/capstone/login-view.fxml"));
+                    getClass().getResource("/com/example/capstone/login-view.fxml"));
             Scene loginScene = new Scene(loader.load());
             Stage stage = (Stage) messageLabel.getScene().getWindow();
             stage.setScene(loginScene);

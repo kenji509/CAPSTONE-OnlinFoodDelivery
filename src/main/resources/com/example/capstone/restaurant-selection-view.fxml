@@ -3,19 +3,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="TOP_CENTER" spacing="15" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.controller.RestaurantSelectionController">
-    <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.capstone.controller.RestaurantSelectionController"
+            stylesheets="@style.css">
 
-    <Label text="Choose a Restaurant" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <top>
+        <VBox styleClass="header-bar" alignment="CENTER_LEFT" spacing="4">
+            <Label text="🍽️  Choose a Restaurant" styleClass="header-bar-label"/>
+        </VBox>
+    </top>
 
-    <ListView fx:id="restaurantListView" prefHeight="300"/>
+    <center>
+        <VBox styleClass="content-area" spacing="10">
+            <ListView fx:id="restaurantListView"/>
+            <Label fx:id="messageLabel" styleClass="error-label"/>
+        </VBox>
+    </center>
 
-    <Button text="View Menu" onAction="#onViewMenuClick"/>
-    <Label fx:id="messageLabel" style="-fx-text-fill: red;"/>
+    <bottom>
+        <HBox styleClass="footer-area" spacing="12" alignment="CENTER_RIGHT">
+            <Button text="View Menu" onAction="#onViewMenuClick"/>
+            <Button text="Logout" onAction="#onLogoutClick" styleClass="danger-button"/>
+        </HBox>
+    </bottom>
 
-    <Button text="Logout" onAction="#onLogoutClick" style="-fx-text-fill: red;"/>
-</VBox>
+</BorderPane>

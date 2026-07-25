@@ -3,21 +3,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="15" xmlns="http://javafx.com/javafx"
+<VBox alignment="CENTER" spacing="14" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.capstone.controller.ConfirmationController">
+      fx:controller="com.example.capstone.controller.ConfirmationController"
+      stylesheets="@style.css">
     <padding>
-        <Insets top="40" right="40" bottom="40" left="40"/>
+        <Insets top="45" right="45" bottom="45" left="45"/>
     </padding>
 
-    <Label text="Order Confirmed!" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: green;"/>
+    <Label text="✅" style="-fx-font-size: 40px;"/>
+    <Label text="Order Confirmed!" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2E7D32;"/>
 
-    <Label fx:id="orderIdLabel"/>
-    <Label fx:id="statusLabel"/>
-    <Label fx:id="totalLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <VBox spacing="4" alignment="CENTER">
+        <Label fx:id="orderIdLabel"/>
+        <Label fx:id="statusLabel"/>
+        <Label fx:id="totalLabel" styleClass="total-label"/>
+        <Label fx:id="paymentLabel" styleClass="subheader-label"/>
+    </VBox>
 
-    <Button text="Cancel Order" onAction="#onCancelOrderClick" style="-fx-text-fill: red;"/>
+    <Button text="Cancel Order" onAction="#onCancelOrderClick" styleClass="danger-button"/>
     <Label fx:id="cancelMessageLabel"/>
 
-    <Button text="Back to Restaurants" onAction="#onBackToHomeClick"/>
+    <Button text="← Back to Restaurants" onAction="#onBackToHomeClick" styleClass="secondary-button"/>
 </VBox>

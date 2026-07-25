@@ -1,5 +1,7 @@
 package com.example.capstone.controller;
 
+import com.example.capstone.model.Customer;
+import com.example.capstone.model.Order;
 import com.example.capstone.model.Rider;
 import com.example.capstone.service.OrderService;
 import com.example.capstone.util.SessionManager;
@@ -8,9 +10,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RiderDashboardController {
@@ -27,6 +31,26 @@ public class RiderDashboardController {
 
     @FXML
     public void initialize() {
+        ordersListView.setCellFactory(list -> new ListCell<>() {
+            private final Label label = new Label();
+            {
+                label.setWrapText(true);
+                label.maxWidthProperty().bind(list.widthProperty().subtract(40));
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+                    label.setText(item);
+                    setGraphic(label);
+                    setText(null);
+                }
+            }
+        });
         loadPendingOrders();
     }
 
@@ -42,6 +66,10 @@ public class RiderDashboardController {
             String orderId  = selected.split(" - ")[0];
             boolean success = orderService.acceptOrder(orderId, loggedInRider.getUserId());
             if (success) {
+                Customer placeholderCustomer = new Customer("", "", "", "", "", "");
+                Order placeholderOrder = new Order(orderId, placeholderCustomer, null, new ArrayList<>());
+                loggedInRider.acceptDelivery(placeholderOrder);
+
                 statusLabel.setText("Accepted: " + orderId);
                 loadPendingOrders();
             } else {

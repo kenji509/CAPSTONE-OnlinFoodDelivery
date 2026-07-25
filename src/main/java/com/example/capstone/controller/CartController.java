@@ -45,6 +45,10 @@ public class CartController {
             summary.append(item.getMenuItem().getName()).append(" x").append(item.getQuantity()).append(", ");
         }
         orderService.placeOrder(order, summary.toString());
+
+        Payment payment = new Payment("PAY-" + System.currentTimeMillis(), order, "Cash on Delivery");
+        payment.processPayment();
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/capstone/confirmation-view.fxml"));
             Scene confirmScene = new Scene(loader.load());
